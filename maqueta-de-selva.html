@@ -6,6 +6,7 @@
 <title>Maqueta de Selva Tropical para Niños | Proyecto 3D para Imprimir</title>
 <meta name="description" content="Crea una maqueta de selva tropical 3D para un proyecto escolar. PDF para imprimir, recortar y construir con animales, plantas y paisaje de selva.">
 <link rel="canonical" href="https://maquetasdepapel.com/maqueta-de-selva.html">
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#FAF6EF;color:#352D28;line-height:1.65}
@@ -173,7 +174,10 @@ footer a{color:#EEE2D5;font-weight:700;text-decoration:underline;margin:0 7px}
 <section class="cta" id="comprar">
 <h2>¿Quieres construir tu propia maqueta de selva?</h2>
 <p>El proyecto es una descarga digital en PDF. Después de la compra podrás imprimir las páginas y empezar a construir.</p>
-<p><strong>La compra directa en Maquetas de Papel se añadirá próximamente.</strong></p>
+<p><strong>$3.49 USD · Pago único · Descarga digital</strong></p>
+<button class="button" id="buy-selva" type="button" style="border:0;cursor:pointer;font-size:16px">Comprar y descargar</button>
+<div class="note">Pago seguro procesado por Paddle · El enlace de descarga estará disponible después del pago</div>
+<br>
 <a class="button" href="/">Ver todas las maquetas</a>
 </section>
 </main>
@@ -186,5 +190,51 @@ footer a{color:#EEE2D5;font-weight:700;text-decoration:underline;margin:0 7px}
 <a href="contacto.html">Contacto</a> ·
 <a href="faq.html">FAQ</a>
 </footer>
+
+<script>
+const PADDLE_CLIENT_TOKEN = "live_6db2475f18adeb16a137f995a0d";
+const SELVA_PRICE_ID = "pri_01m1zzb2ybmzewjs7765anrpd8";
+const DOWNLOAD_WORKER = "https://school-projects-india-downloads.gedeeldemailbox.workers.dev";
+
+Paddle.Initialize({
+  token: PADDLE_CLIENT_TOKEN,
+  eventCallback: async function(event) {
+    if (event.name !== "checkout.completed") return;
+
+    const transactionId = event?.data?.transaction_id || event?.data?.transactionId;
+    if (!transactionId) {
+      alert("El pago se completó, pero no pudimos preparar la descarga automáticamente. Ponte en contacto con nosotros.");
+      return;
+    }
+
+    try {
+      const response = await fetch(DOWNLOAD_WORKER + "/claim", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({transaction_id: transactionId})
+      });
+
+      const data = await response.json();
+
+      if (data.status === "ready" && data.download_url) {
+        window.location.href = data.download_url;
+        return;
+      }
+
+      alert("Tu pago se ha completado. La descarga todavía se está preparando; inténtalo de nuevo en unos instantes.");
+    } catch (error) {
+      console.error(error);
+      alert("Tu pago se ha completado, pero hubo un problema al preparar la descarga. Ponte en contacto con nosotros.");
+    }
+  }
+});
+
+document.getElementById("buy-selva").addEventListener("click", function() {
+  Paddle.Checkout.open({
+    items: [{ priceId: SELVA_PRICE_ID, quantity: 1 }]
+  });
+});
+</script>
+
 </body>
 </html>
