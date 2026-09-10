@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sobre mí | Maquetas de Papel</title>
+
+<meta name="description" content="Conoce a Ronald, creador de Maquetas de Papel. Diseños imprimibles nacidos de años de recortar, pegar, construir y crear proyectos de papel en familia.">
+
+<link rel="canonical" href="https://maquetasdepapel.com/sobre-mi.html">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8V5PMQNVLN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-8V5PMQNVLN');
+</script>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#FAF6EF;
+  color:#352D28;
+  line-height:1.7;
+}
+
+.top-bar{
+  background:#F1E3D3;
+  color:#75402F;
+  text-align:center;
+  padding:9px 15px;
+  font-size:14px;
+  font-weight:700;
+}
+
+header{
+  background:#fff;
+  border-bottom:1px solid #E6DCCE;
+  padding:20px;
+  text-align:center;
+}
+
+.logo{
+  font-size:30px;
+  font-weight:800;
+  color:#75402F;
+  text-decoration:none;
+}
+
+.tagline{
+  margin-top:3px;
+  color:#776B62;
+  font-size:14px;
+}
+
+.hero{
+  max-width:1100px;
+  margin:auto;
+  padding:70px 20px 60px;
+  display:grid;
+  grid-template-columns:0.9fr 1.1fr;
+  gap:55px;
+  align-items:center;
+}
+
+.hero-image img{
+  width:100%;
+  display:block;
+  border-radius:18px;
+  box-shadow:0 8px 26px rgba(0,0,0,.12);
+}
+
+.label{
+  display:inline-block;
+  background:#F1E3D3;
+  color:#A94732;
+  padding:7px 14px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:14px;
+  margin-bottom:18px;
+}
+
+h1{
+  margin:0 0 22px;
+  color:#75402F;
+  font-size:48px;
+  line-height:1.12;
+}
+
+.hero p{
+  font-size:18px;
+  color:#66594E;
+  margin:0 0 18px;
+}
+
+.story{
+  background:#fff;
+  padding:70px 20px;
+}
+
+.story-inner{
+  max-width:820px;
+  margin:auto;
+}
+
+.story h2{
+  color:#75402F;
+  font-size:34px;
+  margin:0 0 25px;
+  text-align:center;
+}
+
+.story p{
+  color:#5F534A;
+  font-size:18px;
+  margin:0 0 20px;
+}
+
+.craft-section{
+  max-width:1050px;
+  margin:auto;
+  padding:70px 20px;
+}
+
+.craft-section h2{
+  text-align:center;
+  color:#75402F;
+  font-size:34px;
+  margin:0 0 12px;
+}
+
+.intro{
+  max-width:760px;
+  margin:0 auto 38px;
+  text-align:center;
+  color:#66594E;
+  font-size:18px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.card{
+  background:#fff;
+  padding:28px;
+  border-radius:15px;
+  box-shadow:0 4px 16px rgba(0,0,0,.07);
+}
+
+.card h3{
+  margin:0 0 10px;
+  color:#75402F;
+  font-size:21px;
+}
+
+.card p{
+  margin:0;
+  color:#66594E;
+}
+
+.family{
+  background:#EFE9DC;
+  padding:70px 20px;
+}
+
+.family-inner{
+  max-width:850px;
+  margin:auto;
+  background:#fff;
+  padding:42px;
+  border-radius:18px;
+  box-shadow:0 4px 16px rgba(0,0,0,.06);
+}
+
+.family-inner h2{
+  color:#75402F;
+  font-size:32px;
+  margin:0 0 22px;
+}
+
+.family-inner p{
+  color:#5F534A;
+  font-size:18px;
+  margin:0 0 18px;
+}
+
+.small-worlds{
+  max-width:850px;
+  margin:auto;
+  padding:70px 20px;
+  text-align:center;
+}
+
+.small-worlds h2{
+  color:#75402F;
+  font-size:34px;
+  margin:0 0 20px;
+}
+
+.small-worlds p{
+  color:#66594E;
+  font-size:18px;
+  margin:0 auto 20px;
+  max-width:760px;
+}
+
+.signature{
+  font-size:21px;
+  color:#75402F;
+  font-weight:700;
+  margin-top:32px;
+}
+
+.button{
+  display:inline-block;
+  background:#75402F;
+  color:#fff;
+  padding:13px 20px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:700;
+  margin-top:18px;
+}
+
+footer{
+  background:#352D28;
+  color:#EEE2D5;
+  text-align:center;
+  padding:32px 20px;
+  font-size:14px;
+}
+
+footer a{
+  color:#EEE2D5;
+  font-weight:700;
+  text-decoration:underline;
+  margin:0 7px;
+}
+
+@media(max-width:800px){
+
+  .hero{
+    grid-template-columns:1fr;
+    gap:35px;
+    padding-top:50px;
+  }
+
+  h1{
+    font-size:40px;
+  }
+
+  .cards{
+    grid-template-columns:1fr;
+  }
+
+  .hero-image{
+    max-width:600px;
+    margin:auto;
+  }
+}
+
+@media(max-width:520px){
+
+  h1{
+    font-size:34px;
+  }
+
+  .story h2,
+  .craft-section h2,
+  .small-worlds h2{
+    font-size:29px;
+  }
+
+  .family-inner{
+    padding:28px;
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="top-bar">
+Maquetas escolares para imprimir · PDF digital · Crea en casa o en clase
+</div>
+
+<header>
+<a class="logo" href="/">Maquetas de Papel</a>
+<div class="tagline">Maquetas escolares · Ecosistemas · Modelos 3D · Manualidades de papel</div>
+</header>
+
+
+<main>
+
+<section class="hero">
+
+<div class="hero-image">
+<img
+src="https://miniaturepaperworlds.com/Diorama-me.png"
+alt="Ilustración de Ronald en su mesa de trabajo rodeado de cajas, papel, tijeras y proyectos de maquetas"
+>
+</div>
+
+<div>
+
+<div class="label">Detrás de Maquetas de Papel</div>
+
+<h1>Hola, soy Ronald.</h1>
+
+<p>
+Siempre me ha gustado crear cosas con mis propias manos. Papel, cartón, pegamento, unas tijeras y una idea son suficientes para mantenerme ocupado durante horas.
+</p>
+
+<p>
+Mi mesa de trabajo rara vez está completamente ordenada. Normalmente hay recortes, pruebas, piezas que todavía necesitan algún ajuste y uno o dos proyectos nuevos esperando su turno.
+</p>
+
+<p>
+Y, para ser sincero, así es exactamente como me gusta.
+</p>
+
+</div>
+
+</section>
+
+
+<section class="story">
+
+<div class="story-inner">
+
+<h2>Siempre estoy construyendo algo</h2>
+
+<p>
+Para mí, hacer manualidades nunca ha sido solamente el resultado final. Me gusta todo el proceso: tener una idea, dibujarla, imprimirla, recortarla, pegarla y descubrir poco a poco si aquello que imaginaba realmente funciona.
+</p>
+
+<p>
+A veces sí funciona a la primera. Muchas veces no.
+</p>
+
+<p>
+Entonces toca medir de nuevo, cambiar una pieza, mover una pared unos milímetros, imprimir otra versión y volver a intentarlo. Probablemente esa sea una de las partes que más me gustan de crear: siempre hay algo que descubrir o mejorar.
+</p>
+
+<p>
+Durante los años he construido todo tipo de pequeñas cosas con papel y cartón. Maquetas, escenarios, pequeñas casas, paisajes, proyectos escolares, miniaturas y, por supuesto, muchos mundos creados dentro de cajas de zapatos.
+</p>
+
+</div>
+
+</section>
+
+
+<section class="craft-section">
+
+<h2>Recortar, pegar y crear</h2>
+
+<p class="intro">
+Mis proyectos siguen siendo, en esencia, manualidades sencillas. No necesitas un taller especial ni máquinas complicadas. Una impresora, papel, tijeras, pegamento y un poco de paciencia pueden convertirse en algo sorprendentemente bonito.
+</p>
+
+<div class="cards">
+
+<div class="card">
+<h3>Empieza con una idea</h3>
+<p>
+Puede ser un bosque, una selva, un océano, el ciclo del agua o simplemente algo que parece divertido de construir. Muchas veces un proyecto comienza con una pregunta muy sencilla: “¿Podría hacer esto con papel?”
+</p>
+</div>
+
+<div class="card">
+<h3>Prueba y vuelve a probar</h3>
+<p>
+Antes de que una maqueta esté terminada suele haber versiones de prueba, piezas descartadas y ajustes. Construyo los proyectos para comprobar cómo encajan y cómo pueden hacerse de una manera clara y práctica.
+</p>
+</div>
+
+<div class="card">
+<h3>Después, a crear</h3>
+<p>
+La parte bonita llega cuando las piezas dejan de ser simples páginas impresas y empiezan a convertirse en árboles, animales, paisajes y pequeños mundos tridimensionales.
+</p>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="family">
+
+<div class="family-inner">
+
+<h2>Muchos proyectos nacen en familia</h2>
+
+<p>
+Gran parte de mi forma de crear viene simplemente de hacer cosas para y con mis propios hijos. Cuando tienes niños cerca de la mesa de manualidades, rápidamente descubres qué cosas son divertidas, qué instrucciones tienen sentido y qué partes podrían ser un poco más sencillas.
+</p>
+
+<p>
+También descubres algo todavía más importante: los niños no siempre quieren construir exactamente lo que tú habías imaginado.
+</p>
+
+<p>
+Y eso está bien.
+</p>
+
+<p>
+Me gusta que una maqueta sirva como punto de partida. Puedes seguir el diseño, pero también añadir tus propias cosas, cambiar la posición de los animales, colocar más plantas, pintar partes, utilizar cartón extra o inventar una historia alrededor del escenario.
+</p>
+
+<p>
+Para mí, un buen proyecto no debería decir solamente “construye esto”. También debería provocar ese momento en que alguien piensa: “¿Y si además hacemos esto?”
+</p>
+
+</div>
+
+</section>
+
+
+<section class="story">
+
+<div class="story-inner">
+
+<h2>De mi mesa de trabajo a Etsy y estas páginas</h2>
+
+<p>
+Durante mucho tiempo estos diseños fueron simplemente proyectos que hacía porque me gustaba crearlos. Con el tiempo empecé a compartir mis plantillas digitales con otras personas y a ofrecer mis diseños en Etsy.
+</p>
+
+<p>
+Eso terminó creciendo hasta convertirse en una colección bastante grande de proyectos imprimibles: dioramas, maquetas escolares, escenas en miniatura y muchas otras cosas que empiezan como una página en la pantalla y terminan como algo que puedes sostener en tus manos.
+</p>
+
+<p>
+Ahora también estoy construyendo mis propias páginas web para que estos proyectos sean más fáciles de encontrar fuera de Etsy. Maquetas de Papel es una de ellas, creada especialmente para familias, niños y docentes que buscan proyectos para imprimir y construir en español.
+</p>
+
+<p>
+Puede que detrás de la pantalla haya una tienda y una página web, pero detrás de los proyectos sigo siendo simplemente yo, sentado en una mesa rodeada de papel, cartón, tijeras, pegamento y demasiadas ideas para el tiempo disponible.
+</p>
+
+</div>
+
+</section>
+
+
+<section class="small-worlds">
+
+<h2>Pequeños mundos hechos con papel</h2>
+
+<p>
+Espero que estas maquetas hagan que empezar un proyecto escolar sea un poco más fácil, pero sobre todo espero que den ganas de crear.
+</p>
+
+<p>
+Porque hay algo especial en imprimir unas cuantas páginas, recortar las piezas y ver cómo poco a poco aparece un bosque, una sabana, un océano o cualquier otro pequeño mundo encima de la mesa.
+</p>
+
+<p>
+Y si al terminar quedan recortes de papel por todas partes y un poco de pegamento en los dedos, probablemente significa que lo hemos hecho bien.
+</p>
+
+<div class="signature">Ronald</div>
+
+<a class="button" href="/">Ver las maquetas</a>
+
+</section>
+
+</main>
+
+
+<footer>
+
+© 2026 Maquetas de Papel · Maquetas para imprimir, recortar y construir
+
+<br><br>
+
+<a href="/">Maquetas</a> ·
+<a href="sobre-mi.html">Sobre mí</a> ·
+<a href="contacto.html">Contacto</a> ·
+<a href="faq.html">FAQ</a>
+
+</footer>
+
+</body>
+</html>
