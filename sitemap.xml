@@ -1,31 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <url>
     <loc>https://maquetasdepapel.com/</loc>
     <lastmod>2026-09-10</lastmod>
   </url>
+
   <url>
     <loc>https://maquetasdepapel.com/maqueta-de-bosque.html</loc>
     <lastmod>2026-09-08</lastmod>
   </url>
+
   <url>
     <loc>https://maquetasdepapel.com/maqueta-de-selva.html</loc>
     <lastmod>2026-09-08</lastmod>
   </url>
+
   <url>
     <loc>https://maquetasdepapel.com/maqueta-del-desierto.html</loc>
     <lastmod>2026-09-08</lastmod>
   </url>
+
   <url>
     <loc>https://maquetasdepapel.com/maqueta-del-oceano.html</loc>
     <lastmod>2026-09-08</lastmod>
   </url>
+
   <url>
     <loc>https://maquetasdepapel.com/maqueta-de-sabana.html</loc>
     <lastmod>2026-09-08</lastmod>
   </url>
+
   <url>
     <loc>https://maquetasdepapel.com/maqueta-del-ciclo-del-agua.html</loc>
     <lastmod>2026-09-10</lastmod>
   </url>
+
+  <url>
+    <loc>https://maquetasdepapel.com/sobre-mi.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+
+  <url>
+    <loc>https://maquetasdepapel.com/contacto.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+
+  <url>
+    <loc>https://maquetasdepapel.com/faq.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+
 </urlset>
