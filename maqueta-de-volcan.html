@@ -204,49 +204,76 @@ footer a{color:#EEE2D5;font-weight:700;text-decoration:underline;margin:0 7px}
 <div class="analytics-footer"><a href="/privacidad.html">Privacidad y analítica</a> · <button type="button" class="analytics-settings">Configurar analítica</button></div></footer>
 
 
+<div id="volcan-payment-recovery-notice" hidden role="status" style="max-width:650px;margin:18px auto;padding:18px;border:2px solid #9a4e30;border-radius:12px;background:#fff5ec;color:#38251e">
+  <strong>¿Ya has pagado?</strong>
+  <p>Estamos esperando la confirmación del pago. No vuelvas a pagar. Conserva tu recibo de Paddle y vuelve a esta página más tarde para intentar recuperar la descarga. Si sigue sin funcionar, ponte en contacto con nosotros e incluye el número de transacción.</p>
+  <a href="#" style="color:#71361c;text-decoration:underline">Volver a comprobar esta compra</a>
+</div>
+
 <script>
 
 const PADDLE_CLIENT_TOKEN = "live_6db2475f18adeb16a137f995a0d";
 const VOLCAN_PRICE_ID = "pri_01m27vayzjj38n0dhf6gc5ssje";
 const DOWNLOAD_WORKER = "https://school-projects-india-downloads.gedeeldemailbox.workers.dev";
 
+// Retry temporary verification delays after Paddle confirms payment.
+const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
+let verifyingPayment = false;
+const recoveryKey = 'maquetas_volcan_pending_transaction';
+function showRecoveryNotice(transactionId) {
+  const notice = document.getElementById('volcan-payment-recovery-notice');
+  if (!notice) return;
+  notice.hidden = false;
+  const link = notice.querySelector('a');
+  if (link && /^txn_[a-z0-9]{10,80}$/.test(transactionId || '')) {
+    link.href = location.pathname + '?_ptxn=' + encodeURIComponent(transactionId);
+  }
+}
+async function verifyVolcanPayment(transactionId) {
+  if (verifyingPayment) return;
+  verifyingPayment = true;
+  const button = document.getElementById('buy-volcan');
+  const previousText = button?.textContent;
+  if (button) { button.disabled = true; button.textContent = 'Verificando el pago…'; }
+  try {
+    const deadline = Date.now() + 30000;
+    do {
+      try {
+        const response = await fetch(DOWNLOAD_WORKER + '/claim', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({transaction_id: transactionId})
+        });
+        const data = await response.json();
+        if (response.ok && data.status === 'ready' && data.download_url) {
+          sessionStorage.removeItem(recoveryKey);
+          window.location.assign(data.download_url);
+          return;
+        }
+        // Retry only while the Worker reports that payment confirmation is pending.
+        if (response.status !== 409 || data.status !== 'pending') break;
+      } catch (error) {
+        console.warn('Temporary verification error', error);
+      }
+      if (Date.now() >= deadline) break;
+      await pause(2500);
+    } while (Date.now() < deadline);
+    showRecoveryNotice(transactionId);
+  } finally {
+    verifyingPayment = false;
+    if (button) { button.disabled = false; button.textContent = previousText; }
+  }
+}
 Paddle.Initialize({
   token: PADDLE_CLIENT_TOKEN,
   eventCallback: async function(event) {
-
-    if (event.name !== "checkout.completed") return;
-
-    const transactionId = event?.data?.transaction_id || event?.data?.transactionId;
-
-    if (!transactionId) {
-      alert("El pago se completó, pero no pudimos preparar la descarga automáticamente. Ponte en contacto con nosotros.");
+    if (event.name !== 'checkout.completed') return;
+    const transactionId = event?.data?.transaction_id || event?.data?.transactionId || event?.data?.transaction?.id || sessionStorage.getItem(recoveryKey);
+    if (!/^txn_[a-z0-9]{10,80}$/.test(transactionId || '')) {
+      alert('El pago se ha completado, pero no hemos podido identificar la transacción. Contacta con nosotros y conserva el recibo de Paddle. No vuelvas a pagar.');
       return;
     }
-
-    try {
-
-      const response = await fetch(DOWNLOAD_WORKER + "/claim", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({transaction_id: transactionId})
-      });
-
-      const data = await response.json();
-
-      if (data.status === "ready" && data.download_url) {
-        window.location.href = data.download_url;
-        return;
-      }
-
-      alert("Tu pago se ha completado. La descarga todavía se está preparando; inténtalo de nuevo en unos instantes.");
-
-    } catch (error) {
-
-      console.error(error);
-
-      alert("Tu pago se ha completado, pero hubo un problema al preparar la descarga. Ponte en contacto con nosotros.");
-
-    }
+    await verifyVolcanPayment(transactionId);
   }
 });
 
@@ -255,7 +282,7 @@ Paddle.Initialize({
 const recoveryTxn = new URLSearchParams(window.location.search).get('_ptxn');
 if (recoveryTxn && /^txn_[a-z0-9]{10,80}$/.test(recoveryTxn)) {
   window.addEventListener('load', () => {
-    try { Paddle.Checkout.open({transactionId: recoveryTxn}); }
+    try { sessionStorage.setItem(recoveryKey, recoveryTxn); Paddle.Checkout.open({transactionId: recoveryTxn}); }
     catch (error) { console.error('Unable to resume checkout', error); }
   });
 }
@@ -275,6 +302,7 @@ document.getElementById("buy-volcan").addEventListener("click", async function()
     if (!response.ok) throw new Error('Recovery checkout unavailable');
     const result = await response.json();
     if (result.status !== 'ok' || !/^txn_[a-z0-9]{10,80}$/.test(result.transactionId||'')) throw new Error('Invalid checkout response');
+    sessionStorage.setItem(recoveryKey, result.transactionId);
     Paddle.Checkout.open({transactionId:result.transactionId});
   } catch (error) {
     console.error(error);
