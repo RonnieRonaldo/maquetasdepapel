@@ -78,7 +78,7 @@ async function claim(){
     const link=document.getElementById('download-link');link.href=target.href;link.hidden=false;
     message('Tu PDF está listo. Si la descarga no comienza, pulsa «Descargar mi PDF».');
     gtag('event','download_ready',{product:'ciclo-del-agua-es',page_variant:'plantillas'});
-    window.location.assign(target.href);return;
+    sessionStorage.removeItem('maquetas_plantillas_pending');window.location.assign(target.href);return;
    }
    if(response.status!==409)break;
    if(attempt<7)await new Promise(resolve=>setTimeout(resolve,2000));
@@ -92,14 +92,27 @@ if(window.Paddle){
  Paddle.Initialize({token:'live_6db2475f18adeb16a137f995a0d',eventCallback:async function(event){
   if(event.name!=='checkout.completed')return;
   buttons.forEach(button=>button.disabled=true);document.getElementById('dock').hidden=true;
-  transactionId=event?.data?.transaction_id||event?.data?.transactionId;
+  transactionId=event?.data?.transaction_id||event?.data?.transactionId||sessionStorage.getItem('maquetas_plantillas_pending');
   if(!transactionId){message('Tu pago se ha completado. Contacta con nosotros para recibir tu PDF; no vuelvas a pagar.');return;}
   await claim();
  }});
- buttons.forEach(button=>button.addEventListener('click',()=>{
+ buttons.forEach(button=>button.addEventListener('click',async ()=>{
   gtag('event','buy_click',{product:'ciclo-del-agua-es',page_variant:'plantillas',button_location:button.dataset.buy});
-  try{Paddle.Checkout.open({items:[{priceId:PRICE_ID,quantity:1}]});}catch(error){message('No se ha podido abrir el pago. Recarga la página e inténtalo de nuevo.');}
+  try{
+   const response=await fetch(WORKER+'/create-spanish-recovery',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({product:'ciclo-del-agua-es',variant:'plantillas'})});
+   if(!response.ok)throw new Error('Checkout creation failed');
+   const data=await response.json();
+   if(!/^txn_[a-z0-9]{10,80}$/.test(data.transactionId||''))throw new Error('Invalid transaction');
+   transactionId=data.transactionId;
+   sessionStorage.setItem('maquetas_plantillas_pending',transactionId);
+   Paddle.Checkout.open({transactionId});
+  }catch(error){console.error(error);message('No se ha podido abrir el pago. Recarga la página e inténtalo de nuevo.');}
  }));
 }else{buttons.forEach(button=>button.disabled=true);message('No se ha cargado el sistema de pago. Comprueba tu conexión y recarga la página.');}
+const resume=new URLSearchParams(location.search).get('_ptxn');
+if(/^txn_[a-z0-9]{10,80}$/.test(resume||'')){
+ transactionId=resume;sessionStorage.setItem('maquetas_plantillas_pending',resume);
+ window.addEventListener('load',()=>{try{Paddle.Checkout.open({transactionId:resume})}catch(error){console.error(error);message('No se pudo reabrir el pago.');}});
+}
 </script>
 </body></html>

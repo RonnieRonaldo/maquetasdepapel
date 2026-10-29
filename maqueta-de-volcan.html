@@ -70,7 +70,7 @@ footer a{color:#EEE2D5;font-weight:700;text-decoration:underline;margin:0 7px}
 <link rel="stylesheet" href="/analytics-consent.css">
 <script defer src="/analytics-consent.js"></script>
 <style>img { max-width: 100%; height: auto; }</style>
-</head>
+<style>.volcan-extra-buy{max-width:860px;margin:28px auto;padding:22px;text-align:center;background:#fff6ee;border:1px solid #e5bfa8;border-radius:12px}.volcan-extra-buy button{padding:14px 28px;border:0;border-radius:8px;background:#8d3e28;color:white;font-weight:700;cursor:pointer}@media(max-width:640px){.volcan-extra-buy{margin:18px 12px}}</style></head>
 
 <body>
 
@@ -93,6 +93,7 @@ footer a{color:#EEE2D5;font-weight:700;text-decoration:underline;margin:0 7px}
 </div>
 <div><img alt="Maqueta de volcán 3D de papel formada por cuatro secciones triangulares para un proyecto escolar" src="images/maqueta-de-volcan-3d-1280.webp" srcset="images/maqueta-de-volcan-3d-640.webp 640w, images/maqueta-de-volcan-3d-1280.webp 1280w" sizes="(max-width: 700px) 100vw, 800px" width="1280" height="1280" decoding="async" loading="eager" fetchpriority="high"></div>
 </section>
+<div class="volcan-extra-buy"><p>PDF imprimible · Pago único · Descarga digital</p><button type="button" data-volcan-extra>Comprar y descargar · $3.49 USD</button></div>
 <section class="section">
 <h2>Un volcán de papel con cuatro mundos por descubrir</h2>
 <p class="intro">Cada sección muestra una parte diferente de la historia. Al reunirlas, los niños crean una maqueta escolar que les ayuda a explicar tanto el interior del volcán como sus efectos en el paisaje.</p>
@@ -181,6 +182,7 @@ footer a{color:#EEE2D5;font-weight:700;text-decoration:underline;margin:0 7px}
 <p style="text-align:center;"><a class="button" href="https://www.youtube.com/shorts/1EK3WcwrPkI" target="_blank" rel="noopener noreferrer">Ver en YouTube</a></p>
 </section>
 
+<div class="volcan-extra-buy"><p>PDF imprimible · Pago único · Descarga digital</p><button type="button" data-volcan-extra>Comprar y descargar · $3.49 USD</button></div>
 <section class="cta" id="proyecto">
 <h2>Construye tu propia maqueta de volcán 3D</h2>
 <p>Descarga el PDF, imprime las piezas y comparte un rato de recortar, construir y descubrir cómo los volcanes transforman nuestro planeta.</p>
@@ -315,5 +317,6 @@ document.getElementById("buy-volcan").addEventListener("click", async function()
 
 </script>
 
+<script>document.querySelectorAll("[data-volcan-extra]").forEach(b=>b.addEventListener("click",()=>document.getElementById("buy-volcan").click()));</script>
 </body>
 </html>
