@@ -250,12 +250,39 @@ Paddle.Initialize({
   }
 });
 
-document.getElementById("buy-volcan").addEventListener("click", function() {
-
-  Paddle.Checkout.open({
-    items: [{ priceId: VOLCAN_PRICE_ID, quantity: 1 }]
+// Resume an existing transaction when Paddle links back with _ptxn.
+// The server still verifies completed payment before any PDF is released.
+const recoveryTxn = new URLSearchParams(window.location.search).get('_ptxn');
+if (recoveryTxn && /^txn_[a-z0-9]{10,80}$/.test(recoveryTxn)) {
+  window.addEventListener('load', () => {
+    try { Paddle.Checkout.open({transactionId: recoveryTxn}); }
+    catch (error) { console.error('Unable to resume checkout', error); }
   });
+}
 
+let volcanCheckoutBusy = false;
+document.getElementById("buy-volcan").addEventListener("click", async function() {
+  if (volcanCheckoutBusy) return;
+  volcanCheckoutBusy = true;
+  const button = this;
+  button.disabled = true;
+  try {
+    const response = await fetch(DOWNLOAD_WORKER + '/create-volcan-recovery', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({product:'volcan-es'})
+    });
+    if (!response.ok) throw new Error('Recovery checkout unavailable');
+    const result = await response.json();
+    if (result.status !== 'ok' || !/^txn_[a-z0-9]{10,80}$/.test(result.transactionId||'')) throw new Error('Invalid checkout response');
+    Paddle.Checkout.open({transactionId:result.transactionId});
+  } catch (error) {
+    console.error(error);
+    alert('No pudimos abrir el pago en este momento. Inténtalo de nuevo más tarde.');
+  } finally {
+    button.disabled = false;
+    volcanCheckoutBusy = false;
+  }
 });
 
 </script>
